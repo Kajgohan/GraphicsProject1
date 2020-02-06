@@ -5,20 +5,31 @@
     <title>WebGL Example File</title>
       <link rel="stylesheet" href="style.css">
 	<script id="vshader" type="x-shader/x-vertex">
-	attribute vec4 vPosition;
-	attribute vec4 vColor;
-	varying vec4 fColor;
+
+	attribute vec2 vPosition;
+	uniform vec2 translation;
+	uniform float resolution;
+    uniform vec4 vColor;
 
 	void main() {
-		gl_Position = vPosition;	// Point position
-  		gl_PointSize = 10.0;		// Point size
-		fColor = vColor;			// Pass point color to fragment shader
+		vec2 position = vPosition - translation;
+
+       // convert the position from pixels to 0.0 to 1.0
+       vec2 zeroToOne = position / resolution;
+
+       // convert from 0->1 to 0->2
+       vec2 zeroToTwo = zeroToOne * 2.0;
+
+       vec2 clipSpace = zeroToTwo - 1.0;
+
+        gl_Position = vec4(clipSpace, 0, 1);
+  		gl_PointSize = 10.0;		    // Point size
   	}
 	</script>
 	
 	<script id="fshader" type="x-shader/x-fragment">
 	precision mediump float;
-	varying vec4 fColor;
+	uniform vec4 fColor;
 
 	void main() 
 	{
@@ -30,6 +41,7 @@
     <script src="lib/initShaders.js"></script>
     <script src="lib/MV.js"></script>
     <script src="example.js"></script>
+      <script src="lib/rq.js"></script>
 
   </head>
  
@@ -37,10 +49,11 @@
 
     <h1 id="ModeLabel">File Mode</h1>
   
-    <canvas id="webgl" width="400" height="400" style="border:1px solid #000000;"></canvas>
+    <canvas left="50%" position="relative" id="webgl" width="400" height="400" style="border:1px solid #000000;"></canvas>
 
-    <button type="button" id="fileButton">File Upload</button>
-  <p id="testOut">test</p>
+    <input class="input" id="file" align="center" type="file" id="avatar" name="avatar" accept=".dat">
+
+
 
   </body>
 </html>
