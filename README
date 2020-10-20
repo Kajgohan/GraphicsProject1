@@ -1,2 +1,2 @@
-The program runs off mostly a series of event driven junctions. It functions just as the video described. The HTML is bare bones, other than the shaders that are in there. They do all of the
+The program runs off mostly a series of event driven Functions. It functions just as the video described. The HTML is bare bones, other than the shaders that are in there. They do all of the
 matrix math for the sacling of the images and the clicked points. The Res folder is where the .dat files are, the lib folder is where the webgl toolkit is as well as the other libraries that I used.
